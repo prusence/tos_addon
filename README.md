@@ -8,6 +8,7 @@
 ### 導入
 \Nexon\Tree of Savior\dataの直下に"_chatbtn-㌠-vxxx"を配置してね。  
 \release\lua\json.luaを差し替えてね。  
+\addonにchatbtnフォルダ作ってね、  
 
 ### 今後の展望
 コマンドでボタンの追加とかできるようにするよ。  
