@@ -50,6 +50,7 @@ if not g.loaded then
     end
     g.loaded = true;
 end
+CHAT_SYSTEM(g.settings.button2.title);
 
 function CHATBTN_ON_INIT(addon, frame)
     --コマンドとボタン
@@ -62,7 +63,7 @@ function CHATBTN_CREATE_BUTTONS()
     chatbutton = {};
     
     for i = 1, 1 do
-        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", 0, 1, 75, 25);
+        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", 0, 1, 74, 25);
         chatbutton[i] = tolua.cast(chatbutton[i], "ui::CButton");
         chatbutton[i]:SetText("{s14}"..g["settings"]["button"..i]["title"]);
         chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK("..i..")");
@@ -71,7 +72,7 @@ function CHATBTN_CREATE_BUTTONS()
     end
 
     -- ボタン2
-    chatbutton[2] = frame:CreateOrGetControl('button', "chatbutton[2]", 75, 1, 75, 25);
+    chatbutton[2] = frame:CreateOrGetControl('button', "chatbutton[2]", 71, 1, 74, 25);
     chatbutton[2] = tolua.cast(chatbutton[2], "ui::CButton");
     chatbutton[2]:SetText("{s14}"..g.settings.button2.title);
     chatbutton[2]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK(2)");
@@ -79,7 +80,7 @@ function CHATBTN_CREATE_BUTTONS()
     chatbutton[2]:SetOverSound('button_over');
 
     -- ボタン3
-    chatbutton[3] = frame:CreateOrGetControl('button', "chatbutton3", 150, 1, 75, 25);
+    chatbutton[3] = frame:CreateOrGetControl('button', "chatbutton[3]", 142, 1, 74, 25);
     chatbutton[3] = tolua.cast(chatbutton3, "ui::CButton");
     chatbutton[3]:SetText("{s14}"..g.settings.button3.title);
     chatbutton[3]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK(3)");
@@ -87,7 +88,7 @@ function CHATBTN_CREATE_BUTTONS()
     chatbutton[3]:SetOverSound('button_over');
     
     -- ボタン4
-    chatbutton[4] = frame:CreateOrGetControl('button', "chatbutton[4]", 225, 1, 75, 25);
+    chatbutton[4] = frame:CreateOrGetControl('button', "chatbutton[4]", 213, 1, 74, 25);
     chatbutton[4] = tolua.cast(chatbutton[4], "ui::CButton");
     chatbutton[4]:SetText("{s14}"..g.settings.button4.title);
     chatbutton[4]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK(4)");
@@ -95,7 +96,7 @@ function CHATBTN_CREATE_BUTTONS()
     chatbutton[4]:SetOverSound('button_over');
 
     -- ボタン5
-    chatbutton[5] = frame:CreateOrGetControl('button', "chatbutton[5]", 300, 1, 75, 25);
+    chatbutton[5] = frame:CreateOrGetControl('button', "chatbutton[5]", 384, 1, 74, 25);
     chatbutton[5] = tolua.cast(chatbutton[5], "ui::CButton");
     chatbutton[5]:SetText("{s14}"..g.settings.button5.title);
     chatbutton[5]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK(5)");
@@ -103,7 +104,7 @@ function CHATBTN_CREATE_BUTTONS()
     chatbutton[5]:SetOverSound('button_over');
 
     -- ボタン6
-    chatbutton[6] = frame:CreateOrGetControl('button', "chatbutton[6]", 375, 1, 75, 25);
+    chatbutton[6] = frame:CreateOrGetControl('button', "chatbutton[6]", 355, 1, 74, 25);
     chatbutton[6] = tolua.cast(chatbutton[6], "ui::CButton");
     chatbutton[6]:SetText("{s14}"..g.settings.button6.title);
     chatbutton[6]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK(6)");
@@ -111,7 +112,7 @@ function CHATBTN_CREATE_BUTTONS()
     chatbutton[6]:SetOverSound('button_over');
 
     -- ボタン7
-    chatbutton[7] = frame:CreateOrGetControl('button', "chatbutton[7]", 450, 1, 75, 25);
+    chatbutton[7] = frame:CreateOrGetControl('button', "chatbutton[7]", 426, 1, 74, 25);
     chatbutton[7] = tolua.cast(chatbutton[7], "ui::CButton");
     chatbutton[7]:SetText("{s14}"..g.settings.button7.title);
     chatbutton[7]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK(7)");
