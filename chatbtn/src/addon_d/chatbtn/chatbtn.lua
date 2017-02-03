@@ -62,7 +62,7 @@ function CHATBTN_CREATE_BUTTONS()
     chatbutton = {};
     
     for i = 1, 7 do
-        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", 70 * (i - 1) - i + 1, 1, 74, 25);
+        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", 70 * (i - 1) - i + 1, 1, 73, 25);
         chatbutton[i] = tolua.cast(chatbutton[i], "ui::CButton");
         chatbutton[i]:SetText("{s14}"..g["settings"]["button"..i]["title"]);
         chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK("..i..")");
