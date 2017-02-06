@@ -1,5 +1,3 @@
-## Chat Btn 
+## Chat Btn 
 なんでもできるボタンがチャット欄に配置されます。(なんでもできるとは言っていない  
-詳しくは紹介記事にて→[Link](http://uruchi.blog51.fc2.com/blog-entry-808.html)
-  
-<a href="http://uruchi.blog51.fc2.com/blog-entry-808.html" target="_blank">test</a>
+詳しくは紹介記事にて→[ばらうる。-ToSヴァカ鯖　ボタンひとつでチャットが発言できるアドオン「ChatBtn」紹介！](http://uruchi.blog51.fc2.com/blog-entry-808.html)(CTRL押しながら左クリックで開いてください)
