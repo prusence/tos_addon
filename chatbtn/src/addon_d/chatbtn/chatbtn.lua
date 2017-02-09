@@ -8,9 +8,12 @@ _G['ADDONS'][addonName] = _G['ADDONS'][addonName] or {};
 local g = _G['ADDONS'][addonName];
 g.settingFileLoc = "../addons/"..addonNameLower.."/setting.json";
 local acutil = require("acutil");
+local chatbutton = {};
 CHAT_SYSTEM(addonName.." loaded! help: /chbt");
 
 local default = {
+    count = 7,
+    size = 73,
     button1 = {
         title = "すき",
         msg = "$g すき"
@@ -37,7 +40,7 @@ local default = {
     },
     button7 = {
         title = "いんだん",
-        msg = "/indun"
+        msg = "$indun"
     }
 };
 
@@ -49,6 +52,12 @@ function CHATBTN_ON_INIT(addon, frame)
             g.settings = default;
         else
             g.settings = t;
+            if g.settings.count == nil then
+                g.settings.count = 7;
+            end
+            if g.settings.size == nil then
+                g.settings.size = 73;
+            end
         end
         g.loaded = true;
     end
@@ -59,15 +68,18 @@ end
 
 function CHATBTN_CREATE_BUTTONS()
     local frame = ui.GetFrame('chatframe');
-    chatbutton = {};
-    
-    for i = 1, 7 do
-        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", 70 * (i - 1) - i + 1, 1, 73, 25);
+
+    for i = 1, g.settings.count do
+        if g["settings"]["button"..i] == nil then
+            g["settings"]["button"..i] = { title = " ", msg = " " };
+        end
+        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", (g.settings.size - 3) * (i - 1), 1, g.settings.size, 25);
         chatbutton[i] = tolua.cast(chatbutton[i], "ui::CButton");
         chatbutton[i]:SetText("{s14}"..g["settings"]["button"..i]["title"]);
         chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK("..i..")");
         chatbutton[i]:SetClickSound('button_click_big');
         chatbutton[i]:SetOverSound('button_over');
+        chatbutton[i]:ShowWindow(1);
     end
 end
 
@@ -82,7 +94,7 @@ end
 function CHATBTN_COMMAND(command)
     local cmd = table.remove(command, 1);
     if not cmd then
-        CHAT_SYSTEM("/chbt msg [数字] [メッセージ] or /chbt title [数字] [タイトル]");
+        CHAT_SYSTEM("/chbt msg [数字] [メッセージ] or /chbt title [数字] [タイトル] or /chbt size [数値] or /chbt count [数値]");
     elseif cmd == 'msg' then
         local msg = "";
         cmd = table.remove(command, 1);
@@ -90,43 +102,47 @@ function CHATBTN_COMMAND(command)
             msg = msg..item.." ";
         end
         msg = string.sub(msg, 1, #msg - 1);
-        
-        if cmd == "1" then
-            CHATBTN_SET_MSG(1, msg);
-        elseif cmd == "2" then
-            CHATBTN_SET_MSG(2, msg);
-        elseif cmd == "3" then
-            CHATBTN_SET_MSG(3, msg);
-        elseif cmd == "4" then 
-            CHATBTN_SET_MSG(4, msg);
-        elseif cmd == "5" then 
-            CHATBTN_SET_MSG(5, msg);
-        elseif cmd == "6" then 
-            CHATBTN_SET_MSG(6, msg);
-        elseif cmd == "7" then 
-            CHATBTN_SET_MSG(7, msg);
+
+        for i = 1, g.settings.count do
+            if cmd == i.."" then
+                CHATBTN_SET_MSG(i, msg);
+                break;
+            end
         end
-        
     elseif cmd == 'title' then
         local title = "";
         cmd = table.remove(command, 1);
         title = table.remove(command, 1);
 
-        if cmd == "1" then
-            CHATBTN_SET_TITLE(1, title);
-        elseif cmd == "2" then
-            CHATBTN_SET_TITLE(2, title);
-        elseif cmd == "3" then
-            CHATBTN_SET_TITLE(3, title);
-        elseif cmd == "4" then 
-            CHATBTN_SET_TITLE(4, title);
-        elseif cmd == "5" then 
-            CHATBTN_SET_TITLE(5, title);
-        elseif cmd == "6" then 
-            CHATBTN_SET_TITLE(6, title);
-        elseif cmd == "7" then 
-            CHATBTN_SET_TITLE(7, title);
-        end  
+        for i = 1, g.settings.count do
+            if cmd == i.."" then
+                CHATBTN_SET_TITLE(i, title);
+                break;
+            end
+        end
+    elseif cmd == 'size' then
+        local size = tonumber(table.remove(command, 1));
+        if size == nil then
+            CHAT_SYSTEM("数値を入力してください");
+            return;
+        else
+            g.settings.size = size;
+            CHAT_SYSTEM("ボタンサイズを"..g.settings.size.."に設定しました。");
+            CHATBTN_CREATE_BUTTONS();
+        end
+    elseif cmd == 'count' then
+        local count = tonumber(table.remove(command, 1));
+        if count == nil then
+            CHAT_SYSTEM("数値を入力してください");
+            return;
+        else
+            for i = count + 1, g.settings.count do
+                chatbutton[i]:ShowWindow(0);
+            end
+            g.settings.count = count;
+            CHAT_SYSTEM("ボタン数を"..g.settings.count.."に設定しました。");
+            CHATBTN_CREATE_BUTTONS();
+        end
     end
     acutil.saveJSON(g.settingFileLoc, g.settings);
 end
