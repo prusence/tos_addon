@@ -79,22 +79,22 @@ function CHATBTN_CREATE_BUTTONS()
         chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK("..i..")");
         chatbutton[i]:SetClickSound('button_click_big');
         chatbutton[i]:SetOverSound('button_over');
+        chatbutton[i]:SetTextTooltip("{s14}"..UNESCAPE(g["settings"]["button"..i]["msg"]));
         chatbutton[i]:ShowWindow(1);
     end
 end
 
 function CHATBTN_ON_CLICK(num)
-    local msg = g["settings"]["button"..num]["msg"];
-    if string.sub(msg, 1, 1) == "$" then
-        msg = "/"..string.sub(msg, 2, #msg);
-    end
-    ui.Chat(msg);
+    ui.Chat(UNESCAPE(g["settings"]["button"..num]["msg"]));
 end
 
 function CHATBTN_COMMAND(command)
     local cmd = table.remove(command, 1);
     if not cmd then
-        CHAT_SYSTEM("/chbt msg [数字] [メッセージ] or /chbt title [数字] [タイトル] or /chbt size [数値] or /chbt count [数値]");
+        CHAT_SYSTEM("/chbt msg [num] [message]");
+        CHAT_SYSTEM("/chbt title [num] [title]");
+        CHAT_SYSTEM("/chbt size [num]");
+        CHAT_SYSTEM("/chbt count [num]");
     elseif cmd == 'msg' then
         local msg = "";
         cmd = table.remove(command, 1);
@@ -123,24 +123,24 @@ function CHATBTN_COMMAND(command)
     elseif cmd == 'size' then
         local size = tonumber(table.remove(command, 1));
         if size == nil then
-            CHAT_SYSTEM("数値を入力してください");
+            CHAT_SYSTEM("Please Input Number!");
             return;
         else
             g.settings.size = size;
-            CHAT_SYSTEM("ボタンサイズを"..g.settings.size.."に設定しました。");
+            CHAT_SYSTEM("Set the button size to "..g.settings.size);
             CHATBTN_CREATE_BUTTONS();
         end
     elseif cmd == 'count' then
         local count = tonumber(table.remove(command, 1));
         if count == nil then
-            CHAT_SYSTEM("数値を入力してください");
+            CHAT_SYSTEM("Please Input Number!");
             return;
         else
             for i = count + 1, g.settings.count do
                 chatbutton[i]:ShowWindow(0);
             end
             g.settings.count = count;
-            CHAT_SYSTEM("ボタン数を"..g.settings.count.."に設定しました。");
+            CHAT_SYSTEM("Set the button count to "..g.settings.count);
             CHATBTN_CREATE_BUTTONS();
         end
     end
@@ -148,15 +148,29 @@ function CHATBTN_COMMAND(command)
 end
 
 function CHATBTN_SET_MSG(num, msg)
-    g["settings"]["button"..num]["msg"] = msg;
-    CHAT_SYSTEM("ボタン"..num.."のメッセージに「"..g["settings"]["button"..num]["msg"].."」を設定しました。");
-    if string.sub(g["settings"]["button"..num]["msg"], 1, 1) == "/" then
-        g["settings"]["button"..num]["msg"] = "$"..string.sub(g["settings"]["button"..num]["msg"], 2, #g["settings"]["button"..num]["msg"]);
-    end
+    chatbutton[num]:SetTextTooltip("{s14}"..g["settings"]["button"..i]["msg"]);
+    CHAT_SYSTEM("Set the button"..num.." message to \'"..msg.."\'");
+    g["settings"]["button"..num]["msg"] = ESCAPE(msg);
 end
 
 function CHATBTN_SET_TITLE(num, title)
     g["settings"]["button"..num]["title"] = title;
     chatbutton[num]:SetText("{s14}"..g["settings"]["button"..num]["title"]);
-    CHAT_SYSTEM("ボタン"..num.."のタイトルに「"..g["settings"]["button"..num]["title"].."」を設定しました。");
+    CHAT_SYSTEM("Set the button"..num.." title to \'"..g["settings"]["button"..num]["title"].."\'");
+end
+
+function ESCAPE(string)
+    if string.sub(string, 1, 1) == "/" then
+        string = "$"..string.sub(string, 2, #string);
+    end
+    
+    return string;
+end
+
+function UNESCAPE(string)
+    if string.sub(string, 1, 1) == "$" then
+        string = "/"..string.sub(string, 2, #string);
+    end
+
+    return string;
 end
