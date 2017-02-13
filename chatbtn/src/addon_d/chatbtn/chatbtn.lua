@@ -127,7 +127,6 @@ function CHATBTN_COMMAND(command)
             return;
         else
             if CHECK_WIDE(g.settings.count, size) == false then
-                CHAT_SYSTEM("Width will over!");
                 return;
             end
             g.settings.size = size;
@@ -141,7 +140,6 @@ function CHATBTN_COMMAND(command)
             return;
         else
             if CHECK_WIDE(count, g.settings.size) == false then
-                CHAT_SYSTEM("Width will over!");
                 return;
             end
             for i = count + 1, g.settings.count do
@@ -169,6 +167,7 @@ end
 
 function CHECK_WIDE(count, size)
     if (size - 3) * count + 3 >= 500 then
+        CHAT_SYSTEM("Width will over the range!");
         return false;
     else
         return true;
