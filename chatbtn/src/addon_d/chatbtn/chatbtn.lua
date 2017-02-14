@@ -14,6 +14,7 @@ CHAT_SYSTEM(addonName.." loaded! help: /chbt");
 local default = {
     count = 7,
     size = 72,
+    tooltipFlag = 'on',
     button1 = {
         title = "すき",
         msg = "$g すき"
@@ -58,6 +59,9 @@ function CHATBTN_ON_INIT(addon, frame)
             if g.settings.size == nil then
                 g.settings.size = default.size;
             end
+            if g.settings.tooltipFlag == nil then
+                g.settings.tooltipFlag = default.tooltipFlag;
+            end
         end
         g.loaded = true;
     end
@@ -79,7 +83,9 @@ function CHATBTN_CREATE_BUTTONS()
         chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK("..i..")");
         chatbutton[i]:SetClickSound('button_click_big');
         chatbutton[i]:SetOverSound('button_over');
-        chatbutton[i]:SetTextTooltip("{s14}"..UNESCAPE(g["settings"]["button"..i]["msg"]));
+        if g.settings.tooltipFlag == 'on' then
+            chatbutton[i]:SetTextTooltip("{s14}"..UNESCAPE(g["settings"]["button"..i]["msg"]));
+        end
         chatbutton[i]:ShowWindow(1);
     end
 end
@@ -95,6 +101,7 @@ function CHATBTN_COMMAND(command)
         CHAT_SYSTEM("/chbt title [num] [title]");
         CHAT_SYSTEM("/chbt size [num]");
         CHAT_SYSTEM("/chbt count [num]");
+        CHAT_SYSTEM("/chbt tooltip on/off");
     elseif cmd == 'msg' then
         local msg = "";
         cmd = table.remove(command, 1);
@@ -122,7 +129,7 @@ function CHATBTN_COMMAND(command)
         end
     elseif cmd == 'size' then
         local size = tonumber(table.remove(command, 1));
-        if size == nil then
+        if size == nil || size <= 0 then
             CHAT_SYSTEM("Please Input Number!");
             return;
         else
@@ -135,7 +142,7 @@ function CHATBTN_COMMAND(command)
         end
     elseif cmd == 'count' then
         local count = tonumber(table.remove(command, 1));
-        if count == nil then
+        if count == nil || count < 0 then
             CHAT_SYSTEM("Please Input Number!");
             return;
         else
@@ -149,20 +156,31 @@ function CHATBTN_COMMAND(command)
             CHAT_SYSTEM("Set the button count to "..g.settings.count);
             CHATBTN_CREATE_BUTTONS();
         end
+    elseif cmd == 'tooltip' then
+        local flag = table.remove(command, 1);
+        if flag == 'on' || flag == 'off' then
+            g.settings.tooltipFlag == flag;
+            CHATBTN_CREATE_BUTTONS();
+            CHAT_SYSTEM("Set the tooltip "..flag);
+        else
+            CHAT_SYSTEM("Please input on/off");
+        end
     end
     acutil.saveJSON(g.settingFileLoc, g.settings);
 end
 
 function CHATBTN_SET_MSG(num, msg)
-    chatbutton[num]:SetTextTooltip("{s14}"..g["settings"]["button"..i]["msg"]);
+    if g.settings.tooltipFlag == 'on' then
+        chatbutton[num]:SetTextTooltip("{s14}"..msg);
+    end
     CHAT_SYSTEM("Set the button"..num.." message to \'"..msg.."\'");
     g["settings"]["button"..num]["msg"] = ESCAPE(msg);
 end
 
 function CHATBTN_SET_TITLE(num, title)
     g["settings"]["button"..num]["title"] = title;
-    chatbutton[num]:SetText("{s14}"..g["settings"]["button"..num]["title"]);
-    CHAT_SYSTEM("Set the button"..num.." title to \'"..g["settings"]["button"..num]["title"].."\'");
+    chatbutton[num]:SetText("{s14}"..title);
+    CHAT_SYSTEM("Set the button"..num.." title to \'"..title.."\'");
 end
 
 function CHECK_WIDE(count, size)
