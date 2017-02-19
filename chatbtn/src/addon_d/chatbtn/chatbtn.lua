@@ -80,6 +80,7 @@ function CHATBTN_CREATE_BUTTONS()
         chatbutton[i]:SetClickSound('button_click_big');
         chatbutton[i]:SetOverSound('button_over');
         chatbutton[i]:SetTextTooltip("{s14}"..UNESCAPE(g["settings"]["button"..i]["msg"]));
+        chatbutton[i]:ShowWindow(1);
     end
 end
 
@@ -142,7 +143,7 @@ function CHATBTN_COMMAND(command)
                 return;
             end
             for i = count + 1, g.settings.count do
-                chatbutton[i]:ReleaseBlink();
+                chatbutton[i]:ShowWindow(0);
             end
             g.settings.count = count;
             CHAT_SYSTEM("Set the button count to "..g.settings.count);
