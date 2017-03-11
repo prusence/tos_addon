@@ -153,6 +153,7 @@ function CHATBTN_COMMAND(command)
             g.settings.count = count;
             CHAT_SYSTEM("Set the button count to "..g.settings.count);
             CHATBTN_CREATE_BUTTONS();
+        end
     else
         -- /chbt [num] [title] [message]
         for i = 1, g.settings.count do
