@@ -130,6 +130,9 @@ function CHATBTN_COMMAND(command)
             CHAT_SYSTEM("Please Input Number!");
             return;
         else
+            if CHATBTN_CHECK_WIDE(g.settings.count, size) == false then
+                return;
+            end
             g.settings.size = size;
             CHAT_SYSTEM("Set the button size to "..g.settings.size);
             CHATBTN_CREATE_BUTTONS();
@@ -141,6 +144,9 @@ function CHATBTN_COMMAND(command)
             CHAT_SYSTEM("Please Input Number!");
             return;
         else
+            if CHATBTN_CHECK_WIDE(count, g.settings.size) == false then
+                return;
+            end
             for i = count + 1, g.settings.count do
                 chatbutton[i]:ShowWindow(0);
             end
@@ -181,6 +187,15 @@ function CHATBTN_SET_TITLE(num, title)
     g["settings"]["button"..num]["title"] = title;
     chatbutton[num]:SetText("{s14}"..title);
     CHAT_SYSTEM("Set the button"..num.." title to \'"..title.."\'");
+end
+
+function CHATBTN_CHECK_WIDE(count, size)
+    if (size - 3) * count + 3 >= 880 then
+        CHAT_SYSTEM("Width will over the range!");
+        return false;
+    else
+        return true;
+    end
 end
 
 function CHATBTN_ESCAPE(string)
