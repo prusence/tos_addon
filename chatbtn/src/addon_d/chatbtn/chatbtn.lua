@@ -73,7 +73,7 @@ function CHATBTN_CREATE_BUTTONS()
         if g["settings"]["button"..i] == nil then
             g["settings"]["button"..i] = { title = " ", msg = " " };
         end
-        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", (g.settings.size - 3) * (i - 1) + 20, 35, g.settings.size, 27.5);
+        chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", (g.settings.size - 3) * (i - 1) + 235, 6, g.settings.size, 25);
         chatbutton[i] = tolua.cast(chatbutton[i], "ui::CButton");
         chatbutton[i]:SetText("{s14}"..g["settings"]["button"..i]["title"]);
         chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK("..i..")");
@@ -190,7 +190,7 @@ function CHATBTN_SET_TITLE(num, title)
 end
 
 function CHATBTN_CHECK_WIDE(count, size)
-    if (size - 3) * count + 3 >= 880 then
+    if (size - 3) * count + 3 >= 555 then
         CHAT_SYSTEM("Width will over the range!");
         return false;
     else
