@@ -76,7 +76,8 @@ function CHATBTN_CREATE_BUTTONS()
         chatbutton[i] = frame:CreateOrGetControl('button', "chatbutton["..i.."]", (g.settings.size - 3) * (i - 1) + 235, 6, g.settings.size, 25);
         chatbutton[i] = tolua.cast(chatbutton[i], "ui::CButton");
         chatbutton[i]:SetText("{s14}"..g["settings"]["button"..i]["title"]);
-        chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK("..i..")");
+        chatbutton[i]:SetEventScript(ui.LBUTTONUP, "CHATBTN_ON_CLICK");
+        chatbutton[i]:SetEventScriptArgNumber(ui.LBUTTONUP, i);
         chatbutton[i]:SetClickSound('button_click_big');
         chatbutton[i]:SetOverSound('button_over');
         chatbutton[i]:SetTextTooltip("{s14}"..CHATBTN_UNESCAPE(g["settings"]["button"..i]["msg"]));
@@ -84,7 +85,7 @@ function CHATBTN_CREATE_BUTTONS()
     end
 end
 
-function CHATBTN_ON_CLICK(num)
+function CHATBTN_ON_CLICK(frame,msg,str,num)
     ui.Chat(CHATBTN_UNESCAPE(g["settings"]["button"..num]["msg"]));
 end
 
