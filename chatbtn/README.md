@@ -5,13 +5,13 @@
 [ばらうる。-ToSヴァカ鯖 ボタンひとつでチャットが発言できるアドオン「ChatBtn」紹介！](http://uruchi.blog51.fc2.com/blog-entry-808.html)  
 
 ### 更新履歴
-2017/10/26 v.1.0.8  
+2018/11/06 v.1.0.8  
 ・不具合修正  
 Special Thanks to tokageel!  
 
 2017/10/26 v.1.0.7  
 ・不具合修正  
-Special Thanks to くら寿司(@torahamu)!  
+Special Thanks to とらハム(@torahamu)!  
 
 2017/4/27 v.1.0.5, v1.0.6  
 ・新UI対応  
