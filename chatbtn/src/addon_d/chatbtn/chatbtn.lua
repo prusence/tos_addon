@@ -12,34 +12,26 @@ local chatbutton = {};
 CHAT_SYSTEM(addonName.." loaded! help: /chbt");
 
 local default = {
-    count = 7,
+    count = 5,
     size = 72,
     button1 = {
-        title = "すき",
-        msg = "$g すき"
-    },
-    button2 = {
-        title = "きらい",
-        msg = "$g きらい"
-    },
-    button3 = {
         title = "よろ",
         msg = "$p よろしくおねがいします"
     },
-    button4 = {
+    button2 = {
         title = "おつ",
         msg = "$p おつかれさまでした"
     },
-    button5 = {
+    button3 = {
         title = "笑み",
         msg = "{img emoticon_0008 30 30}{\/}"
     },
-    button6 = {
+    button4 = {
         title = "脱力",
         msg = "{img emoticon_0009 30 30}{\/}"
     },
-    button7 = {
-        title = "いんだん",
+    button5 = {
+        title = "Indun",
         msg = "$indun"
     }
 };
@@ -63,7 +55,7 @@ function CHATBTN_ON_INIT(addon, frame)
     end
 
     acutil.slashCommand("/chbt", CHATBTN_COMMAND);
-    addon:RegisterMsg('GAME_START','CHATBTN_CREATE_BUTTONS');
+    addon:RegisterMsg('GAME_START', 'CHATBTN_CREATE_BUTTONS');
 end
 
 function CHATBTN_CREATE_BUTTONS()
@@ -85,7 +77,7 @@ function CHATBTN_CREATE_BUTTONS()
     end
 end
 
-function CHATBTN_ON_CLICK(frame,msg,str,num)
+function CHATBTN_ON_CLICK(frame, msg, str, num)
     ui.Chat(CHATBTN_UNESCAPE(g["settings"]["button"..num]["msg"]));
 end
 
@@ -199,18 +191,18 @@ function CHATBTN_CHECK_WIDE(count, size)
     end
 end
 
-function CHATBTN_ESCAPE(string)
-    if string.sub(string, 1, 1) == "/" then
-        string = "$"..string.sub(string, 2, #string);
+function CHATBTN_ESCAPE(str)
+    if string.sub(str, 1, 1) == "/" then
+        str = "$"..string.sub(str, 2, #str);
     end
     
-    return string;
+    return str;
 end
 
-function CHATBTN_UNESCAPE(string)
-    if string.sub(string, 1, 1) == "$" then
-        string = "/"..string.sub(string, 2, #string);
+function CHATBTN_UNESCAPE(str)
+    if string.sub(str, 1, 1) == "$" then
+        str = "/"..string.sub(str, 2, #str);
     end
 
-    return string;
+    return str;
 end
