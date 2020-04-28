@@ -12,7 +12,7 @@ local chatbutton = {};
 CHAT_SYSTEM(addonName.." loaded! help: /chbt");
 
 local default = {
-    count = 5,
+    count = 3,
     size = 72,
     button1 = {
         title = "よろ",
@@ -23,14 +23,6 @@ local default = {
         msg = "$p おつかれさまでした"
     },
     button3 = {
-        title = "笑み",
-        msg = "{img emoticon_0008 30 30}{\/}"
-    },
-    button4 = {
-        title = "脱力",
-        msg = "{img emoticon_0009 30 30}{\/}"
-    },
-    button5 = {
         title = "Indun",
         msg = "$indun"
     }
